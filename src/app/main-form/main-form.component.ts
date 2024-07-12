@@ -31,7 +31,7 @@ export class MainFormComponent {
     lastName: new FormControl(''),
   });
   snackBarMsg =
-    "You can see the form data in the browser's developer console after clicking the submit button";
+    "You can see the form data in the browser's developer console (Ctrl + Shift + J or Cmd + Option + J)";
 
   constructor(private snackBar: MatSnackBar) {}
 
