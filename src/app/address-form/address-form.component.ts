@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  viewProviders: [
+  providers: [
     {
       provide: ControlContainer, useExisting: FormGroupDirective
     }
@@ -19,7 +19,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './address-form.component.html',
   styleUrl: './address-form.component.scss'
 })
-export class AddressFormComponent {
+export class AddressFormComponent implements OnInit, OnDestroy {
   @Input({ required: true}) key: string = '';
   @Input({ required: true}) groupLabel: string = '';
 
@@ -31,16 +31,14 @@ export class AddressFormComponent {
   });
 
   get parentFormGroup() {
-    console.log(this.parentContainer.control);
-    
     return this.parentContainer.control as FormGroup;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.parentFormGroup.addControl(this.key, this.form);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.parentFormGroup.removeControl(this.key);
   }
 }
